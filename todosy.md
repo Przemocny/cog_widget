@@ -1,0 +1,7 @@
+- podpiac material design css
+- podpiąc material design icons
+- zrobic opengraph
+- zrobic fanpage na fb
+- zrobic fanpage na linkedin
+- zrobic filmiki z DSLaba na yt - activity, product connection, overview, view products
+- zrobic onepagera w pdf

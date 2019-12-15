@@ -1,0 +1,125 @@
+
+.modal-wrapper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  .modal-inner{
+    background: #fff;
+    max-width: 1000px;
+    padding:50px;
+
+    input{
+      min-width:250px;
+      
+    }
+    .MuiFormControl-root{
+      min-width:250px;
+    }
+    .MuiFormLabel-root{
+      background: #fff;
+    }
+  }
+}
+
+
+.grid{
+  padding:10px;
+  width:100%;
+
+  .cell-row{
+    width:100%;
+    position: relative;
+    overflow: hidden;
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100px;
+
+    &.cell-row-center{
+      justify-content: center;;
+    }
+
+
+    &.cell-head{
+      justify-content: center;
+      align-items: center;
+
+      .cell{
+        padding-left:15px;
+        padding-right:15px;
+        img{max-height: 50px;}
+        input{
+          min-width:300px;
+        }
+      }
+    }
+
+    &.cell-header{
+      position: relative;
+      
+      .cell{
+        position: relative;
+        padding-left:15px;
+        padding-right:15px;
+        .cell-metrics{
+          position: absolute;
+          display: block;
+          font-size:13px;
+          text-align: center;
+          left:50%;
+          transform: translateX(-50%);
+        }
+
+        input{
+          min-width:300px;
+        }
+      }
+      
+    }
+
+    &.cell-list{
+      height: 60px;
+      .cell{
+        position: relative;
+        padding-left:15px;
+        padding-right:15px;
+        text-align:center;
+        min-width: 100px;
+
+        &.cell-name{
+          width:190px;
+          text-align:left;
+        }
+
+        small{
+          font-size:12px;
+        }
+        input{
+          width:100px;
+          text-align: center;
+          padding:9px 5px;
+        }
+      }
+    }
+
+  }
+  
+  .cell{
+ 
+
+
+  &.abs{
+  }
+    &.cell-header{
+      
+    
+    }
+
+    &.cell-checkbox{
+      input[type=number]{
+       
+      }
+    }
+  }
+}

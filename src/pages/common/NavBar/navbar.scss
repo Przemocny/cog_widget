@@ -1,0 +1,89 @@
+.app-navbar{
+
+    z-index: 1000;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    background-color:rgba(255,255,255,1);
+    box-shadow:3px 3px 5px rgba(0,0,0,0.3);
+    border-bottom: 2px solid darken(red, 10%);
+
+    .app-navbar-logo{
+        display:block;
+        padding:10px 0;
+        text-align: center;
+        img{
+            max-height: 40px;
+        }
+    }
+    .motto{
+        display:block;
+        padding:18px 0 0;
+        margin:auto;
+        text-align: left;
+        font-style: italic;
+    }
+
+    .app-menu-toggler{
+            display:block;
+            padding:15px 10px;
+            height: 60px;
+            svg{
+                position:relative;
+                top:1px;
+            }
+    }
+}
+
+.app-side-menu{
+    position:fixed;
+    z-index: 1000;
+    top:60px;
+    height:calc(100vh - 60px);
+    background-color:rgba(0,0,0,0.5);
+    width:100%;
+    display:flex;
+    justify-content: center;
+    align-items: flex-start;
+    transform:translateX(-100%);
+    transition:all 0.5s ease;
+
+    .app-nav-menu{
+        background:white;
+        padding:0;
+        margin:0;
+        margin-top:15px;
+        list-style: none;
+        width:calc(100% - 30px);
+        transform:translateY(100%);
+        transition:all 0.5s ease;
+        box-shadow:5px 5px 5px rgba(0,0,0,0.9);
+
+        .app-nav-item{
+            padding:10px;
+            a{
+                padding:5px;
+                display: block;
+                border-bottom:1px solid white;
+            }
+            &.active{
+                a{
+                    color:darken(red,20%);
+                    border-bottom:1px solid darken(red,20%);
+                }
+            }
+        }
+    }
+
+    &.show{
+        transform:translateX(0);
+        .app-nav-menu{
+            transform:translateY(0);
+        }
+
+
+    }
+
+
+}
