@@ -16,8 +16,18 @@ const products = [
 	{ name: 'ser żółty', unit: 'g', measure: 1000, price: 19.5 },
 	{ name: 'oliwki', unit: 'g', measure: 250, price: 7.99 },
 	{ name: 'pieczarki', unit: 'g', measure: 1000, price: 11.5 },
-]
+	{name:'ciasto do pizzy', measure:1000, unit:'g', price:8 },
+	{name:'ananas', measure:400, unit:'g', price:8 },
+	{name:'sos pomidorowy', measure:1000, unit:'g', price:24 },
+	{name:'wołowina mielona', measure:1000, unit:'g', price:40 },
+	{name:'sałata', measure:250, unit:'g', price:5 },
+	{name:'pomidor', measure:1000, unit:'g', price:8 },
+	{name:'cebula', measure:1000, unit:'g', price:5 },
+	{name:'makaron', measure:500, unit:'g', price:8 },
+	{name:'zioła', measure:100, unit:'g', price:4, },
+	{name:'szynka mielona', measure:1000, unit:'g', price:18 },
 
+]
 
 const pizza = [
 	{name:'ciasto do pizzy', measure:1000, unit:'g', price:8, portion:160, cost:1.28},
@@ -27,7 +37,6 @@ const pizza = [
 	{name:'sos pomidorowy', measure:1000, unit:'g', price:24, portion:90, cost:2.16},
 ]
 
-
 const burger = [
 	{name:'bułka do burgera', measure:70, unit:'g', price:1.13, portion:70, cost:1.13},
 	{name:'wołowina mielona', measure:1000, unit:'g', price:40, portion:100, cost:4},
@@ -36,7 +45,6 @@ const burger = [
 	{name:'pomidor', measure:1000, unit:'g', price:8, portion:40, cost:0.32},
 	{name:'cebula', measure:1000, unit:'g', price:5, portion:40, cost:0.2},
 ]
-
 
 const spaghetti = [
 	{name:'makaron', measure:500, unit:'g', price:8, portion:150, cost:2.4},

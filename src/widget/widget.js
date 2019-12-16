@@ -15,7 +15,9 @@ import {
 	addNewIngredient,
 	closeNewIngredientModal,checkExample
 } from './store'
-import {NewEntryModal, CheckboxArray, NewIngredientModal, Header, Summary,Examples} from './common'
+import { CheckboxArray, Header, Summary,Examples} from './common'
+import { NewEntryModal, NewIngredientModal } from './modals'
+import logo from '../images/localhost_sam.png'
 
 const actions = {
 	filterProducts,
@@ -34,6 +36,16 @@ const actions = {
 }
  
 
+const Brand = ()=>{
+	return (
+		<div className="logo">
+		<a href="https://localhost-group.com/" target="_blank">
+			<strong>Twórcy narzędzia:</strong>{' '}<img src={logo}/>{' '}<strong>Zapraszamy do współpracy!</strong>{' '}
+			</a>
+		</div>
+	)
+}
+
 class Grid extends React.Component {
 	render() {
 		const {selectedProducts, products, changeCostOfSelectedProduct, removeOneSelectedProduct} = this.props
@@ -51,6 +63,7 @@ class Grid extends React.Component {
 						product={el} idx={k} products={products} key={k} />
 					})}
 					<Summary {...this.props}/>
+					<Brand/>
 				</div>
 			</React.Fragment>
 		)

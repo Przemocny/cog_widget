@@ -1,21 +1,16 @@
 import React from 'react'
 import Button from '@material-ui/core/Button'
-import InputLabel from '@material-ui/core/InputLabel'
-import MenuItem from '@material-ui/core/MenuItem'
-import FormHelperText from '@material-ui/core/FormHelperText'
 import FormControl from '@material-ui/core/FormControl'
-import Select from '@material-ui/core/Select'
 import TextField from '@material-ui/core/TextField'
-import Modal from '@material-ui/core/Modal'
-
 
 const Examples = ({checkExample})=>{
 	return (
 		<React.Fragment>
-			<div className='cell-row cell-list cell-row-center'>
+			<div className='cell-row cell-list cell-row-center cell-bordered'>
 				<div className='cell cell-elem'>Przykłady:</div>
 				<div className='cell cell-elem'>
 					<Button
+					size="small"
 						variant='contained'
 						color='primary'
 						onClick={() => {
@@ -27,6 +22,7 @@ const Examples = ({checkExample})=>{
 				</div>
 				<div className='cell cell-elem'>
 					<Button
+					size="small"
 						variant='contained'
 						color='primary'
 						onClick={() => {
@@ -39,6 +35,7 @@ const Examples = ({checkExample})=>{
 				</div>
 				<div className='cell cell-elem'>
 					<Button
+					size="small"
 						variant='contained'
 						color='primary'
 						onClick={() => {
@@ -55,117 +52,6 @@ const Examples = ({checkExample})=>{
 
 }
 
-const NewIngredientModal = ({
-	changeNewIngredientField,
-	addNewIngredient,
-	closeNewIngredientModal,units,
-	newIngredient,isIngredientModalShow
-}) => {
-	const {name, price, unit, measure } = newIngredient
-	return (
-		<Modal
-			open={isIngredientModalShow}
-			onClose={closeNewIngredientModal}
-			className='modal-wrapper'
-		>
-			<div className='modal-inner'>
-				<h3 className='text-center mb-5'>Stwórz swój składnik</h3>
-				<div className='row mb-5'>
-					<div className='col'>
-						<FormControl variant='outlined'>
-							<TextField
-								id='2'
-								label='Nazwa składnika'
-								variant='outlined'
-								value={name}
-								onChange={(ev) => {
-									changeNewIngredientField({ name:'name', value:ev.target.value })
-								}}
-							/>
-						</FormControl>
-					</div>
-					<div className='col'>
-						<FormControl variant='outlined'>
-							<TextField
-								id='2'
-								label='Porcja w gramach'
-								variant='outlined'
-								type='number'
-								onChange={(ev) => {
-
-									changeNewIngredientField({ name:'measure', value:Number(ev.target.value) })
-
-								}}
-								value={measure}
-								min={0}
-								step={0.5}
-							/>
-
-							<FormHelperText>
-								Wpisz gramaturę lub wybierz jedną z gotowych
-							</FormHelperText>
-						</FormControl>
-					</div>
-					<div className='col'>
-						<FormControl variant='outlined'>
-							<InputLabel  >Przykładowe miary</InputLabel>
-							<Select
-								defaulValue={'g'}
-								onChange={(ev) => {
-									const [selected] = units.filter(
-										(el) => el.short == ev.target.value
-									)
-									changeNewIngredientField({ name:'measure', value:selected.measure })
-								}}
-							>
-								{units.map((el, k) => {
-									return (
-										<MenuItem key={k} value={el.short}>
-											{el.name} ~{el.measure}g
-										</MenuItem>
-									)
-								})}
-							</Select>
-						</FormControl>
-					</div>
-				</div>
-				<div className='row justify-content-center align-items-center'>
-				<div className="col"></div>
-					<div className='col'>
-						<FormControl variant='outlined'>
-							<TextField
-								id='2'
-								label='Cena netto za porcję (PLN)'
-								variant='outlined'
-								type='number'
-								value={price}
-								step={0.01}
-								min={0}
-								onChange={(ev) => {
-									changeNewIngredientField({ name:'price', value:Number(ev.target.value) })
-								}}
-							/>
-						</FormControl>
-					</div>
-					<div className='col'>
-						<FormControl>
-							<Button
-								centerRipple={true}
-								onClick={() => {
-									addNewIngredient()
-								}}
-								variant='contained'
-								color='secondary'
-							>
-								Dodaj
-							</Button>
-						</FormControl>
-					</div>
-				</div>
-			</div>
-		</Modal>
-	)
-}
 
 const Header = ({
 	filteredProducts,
@@ -180,20 +66,22 @@ const Header = ({
 	return (
 		<React.Fragment>
 			{dish === '' && (
-				<div className='cell-row cell-head text-center mt-5 mb-2'>
+				<div className='cell-row cell-head text-center mt-5'>
 					<div className='cell'>
+					<h2>COG Calc</h2>
 						<h5>
 							Prosty i intuicyjny kalkulator kosztów wytworzenia
 							dania
 						</h5>
 						<h6>
-							bo lepiej jest mieć jakiekolwiek policzone koszty
-							portaw w restauracji niż żadne :)
+						<strong>
+							Lepiej jest mieć policzone koszty
+							portaw w restauracji niż żadne!
+							</strong>
 						</h6>
-
-						<h6 className='text-danger'>
+						<h6 className='text-danger'>			<small>
 							Wymagane jest posiadanie <strong>potrawy</strong>,
-							którą chcemy policzyć oraz <strong>wagi</strong>
+							którą chcemy policzyć oraz <strong>wagi</strong></small>
 						</h6>
 					</div>
 				</div>
@@ -230,21 +118,24 @@ const Header = ({
 								const { value } = ev.target
 								filterProducts({ filter: value })
 							}}
+							helperText="napisz do nas, aby mieć swoje, zawsze aktualne ceny zakupu"
 						/>
 					</FormControl>
 				</div>
-				{filteredProducts.map((el, k) => {
+				<div className="cell-horizontal-scroll">
+				{filteredProducts.filter((e, k)=> k <= 10).map((el, k) => {
 					return (
 						<div className='cell' key={k}>
 							<div>
 								<Button
+								size="small"
 									variant='contained'
 									color='primary'
 									onClick={() => {
 										openModalWithProduct({ product: el })
 									}}
 								>
-									+ {el.name}
+									<strong>+</strong>{'  '}{el.name}
 								</Button>
 							</div>
 							<div className='cell cell-metrics'>
@@ -257,17 +148,19 @@ const Header = ({
 					)
 				})}
 
-				<div className='cell'>
-					<Button
-						variant='contained'
-						color='secondary'
-						onClick={() => {
-							openNewIngredientModal()
-						}}
-					>
-						stwórz swój składnik
-					</Button>
+			
 				</div>
+				<div className='cell'>
+				<Button
+					variant='contained'
+					color='secondary'
+					onClick={() => {
+						openNewIngredientModal()
+					}}
+				>
+					stwórz swój składnik
+				</Button>
+			</div>
 			</div>
 		</React.Fragment>
 	)
@@ -289,9 +182,11 @@ const Summary = ({ sum, weight, clearSelectedProducts, dish, selectedProducts })
 						<h4>{sum + 'PLN'}</h4>
 					</div>
 				</div>
-				<div className='cell-row cell-list cell-row-center'>
+				<div className='cell-row cell-list cell-spaced'>
 					<div className='cell cell-elem'>
 						<Button
+						size='small'
+
 							variant='contained'
 							color='secondary'
 							onClick={clearSelectedProducts}
@@ -301,6 +196,8 @@ const Summary = ({ sum, weight, clearSelectedProducts, dish, selectedProducts })
 					</div>
 					<div className='cell cell-elem'>
 						<Button
+						size='large'
+
 							variant='contained'
 							color='primary'
 							onClick={() => {
@@ -318,134 +215,6 @@ const Summary = ({ sum, weight, clearSelectedProducts, dish, selectedProducts })
 	}
 	return null
 }
-const NewEntryModal = ({
-	isModalShow,
-	units,
-	activeProductInModal,
-	changeUnit,
-	changePortion,
-	addSelectedProduct,
-	closeModalWithProduct,
-}) => {
-	const { price, name, portion, measure, cost, unit } = activeProductInModal
-	return (
-		<Modal
-			open={isModalShow}
-			onClose={closeModalWithProduct}
-			className='modal-wrapper'
-		>
-			<div className='modal-inner'>
-				<h3 className='text-center mb-5'>Dodaj składnik</h3>
-				<div className='row  mb-5'>
-					<div className='col'>
-						<FormControl variant='outlined'>
-							<TextField
-								id='2'
-								label='Koszt netto (PLN)'
-								variant='outlined'
-								value={name}
-								step={0.01}
-								min={0}
-							/>
-						</FormControl>
-					</div>
-					<div className='col'>
-						<FormControl variant='outlined'>
-							<TextField
-								id='2'
-								label='Porcja w gramach'
-								variant='outlined'
-								type='number'
-								onChange={(ev) => {
-									changePortion({
-										portion: Number(ev.target.value),
-									})
-								}}
-								value={portion}
-								min={0}
-								step={0.5}
-							/>
-
-							<FormHelperText>
-								Wpisz gramaturę lub wybierz jedną z gotowych
-							</FormHelperText>
-						</FormControl>
-					</div>
-					<div className='col'>
-						<FormControl variant='outlined'>
-							<InputLabel id='1'>Przykładowe miary</InputLabel>
-							<Select
-								labelId='1'
-								id='1'
-								defaulValue={unit}
-								onChange={(ev) => {
-									const [selected] = units.filter(
-										(el) => el.short == ev.target.value
-									)
-									changeUnit({ unit: selected })
-								}}
-							>
-								{units.map((el, k) => {
-									return (
-										<MenuItem key={k} value={el.short}>
-											{el.name} ~{el.measure}g
-										</MenuItem>
-									)
-								})}
-							</Select>
-						</FormControl>
-					</div>
-				</div>
-				<div className='row mb-2'>
-					<div className='col'>
-						<FormControl variant='outlined'>
-							<TextField
-								id='2'
-								label='Cena netto (PLN)'
-								variant='outlined'
-								type='number'
-								value={price}
-								step={0.01}
-								min={0}
-							/>
-							<FormHelperText
-							>{`za ${measure}${unit}`}</FormHelperText>
-						</FormControl>
-					</div>
-					<div className='col'>
-						<FormControl variant='outlined'>
-							<TextField
-								id='2'
-								label='Koszt netto (PLN)'
-								variant='outlined'
-								type='number'
-								value={cost}
-								step={0.01}
-								min={0}
-							/>
-							<FormHelperText
-							>{`za ${portion}${unit}`}</FormHelperText>
-						</FormControl>
-					</div>
-					<div className='col'>
-						<FormControl>
-							<Button
-								centerRipple={true}
-								onClick={() => {
-									addSelectedProduct()
-								}}
-								variant='contained'
-								color='secondary'
-							>
-								Dodaj
-							</Button>
-						</FormControl>
-					</div>
-				</div>
-			</div>
-		</Modal>
-	)
-}
 
 const CheckboxArray = ({
 	products,
@@ -455,8 +224,12 @@ const CheckboxArray = ({
 	removeOneSelectedProduct,
 }) => {
 	return (
-		<div className='cell-row cell-list'>
-			<div className='cell cell-elem' />
+		<div className='cell-row cell-list cell-bordered'>
+			<div className='cell cell-elem' >
+			<small>
+			#{idx+1}
+		</small>
+	</div>
 			<div className='cell cell-elem'>
 				<small>
 					{product.portion}
@@ -470,6 +243,8 @@ const CheckboxArray = ({
 			<div className='cell cell-elem'>
 				<FormControl>
 					<TextField
+					size="small"
+
 						type='number'
 						value={product.cost}
 						variant='outlined'
@@ -486,17 +261,19 @@ const CheckboxArray = ({
 			</div>
 			<div className='cell cell-elem'>
 				<Button
+				size="small"
+
 					variant='outlined'
 					color='secondary'
 					onClick={() => {
 						removeOneSelectedProduct({ idx: idx })
 					}}
 				>
-					Usuń
+					-
 				</Button>
 			</div>
 		</div>
 	)
 }
 
-export { NewEntryModal, CheckboxArray, NewIngredientModal, Header, Summary, Examples }
+export { CheckboxArray, Header, Summary, Examples }
