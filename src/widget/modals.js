@@ -136,17 +136,15 @@ const OfferModal = ({ isOfferModalShow, closeOfferModal }) => {
 	return (
 		<Modal open={isOfferModalShow} onClose={closeOfferModal} className='modal-wrapper'>
 			<div className='modal-inner'>
-			
-		
 				<h2 className='text-center'>
 					Stań się świadomym restauratorem
 				</h2>
-				<h3 className='text-center mb-5'>
-					Zyskaj przewagę w regionie, dzięki wsparciu analityków
-				</h3>
-				<div className='row mb-5'>
+				<h4 className='text-center mb-5'>
+					Zyskaj przewagę w regionie, dzięki abonamentowemu wsparciu analityków
+				</h4>
+				<div className='row mb-5 align-items-center'>
 					<div className='col'>
-						<h3 className="mb-4">Zyskasz:</h3>
+						<h4 className="mb-4">Zyskasz:</h4>
 						<ul>
 							<li>
 								<h5>Pełen nadzór właścicielski</h5>
@@ -171,6 +169,22 @@ const OfferModal = ({ isOfferModalShow, closeOfferModal }) => {
 								</h6>
 							</li>
 						</ul>
+					</div>
+					<div className="col">
+					<div className='error-msg'>
+					<h5 className='text-center'>
+					Darmowa wersja demonstracyjna - aby uzyskać dostęp do pełnych możliwości narzędzia skontaktuj się z nami
+				</h5>
+		
+					</div> 
+
+					<h2 className='text-center mb-5'>
+					Przy abonamencie analitycznym, narzędzie otrzymujesz za 0zł
+				</h2>
+
+				<h4 className='text-center mb-5'>
+					Samodzielne narzędzie możesz zamówić za 150zł net/msc
+				</h4>
 					</div>
 				</div>
 				<div className='row justify-content-center'>
@@ -201,17 +215,7 @@ const OfferModal = ({ isOfferModalShow, closeOfferModal }) => {
 						</FormControl>
 					</div>
 				</div>
-
-				<div className="row">
-				<div className='col'>
 				
-				<div className='error-msg'>
-			<h5 className='text-center'>
-			Darmowa wersja demonstracyjna - aby uzyskać dostęp do pełnych możliwości narzędzia skontaktuj się z nami
-		</h5>
-
-			</div></div>
-				</div>
 			</div>
 		</Modal>
 	)

@@ -92,7 +92,7 @@ const Dish = ({ dish, changeDishName }) => {
 		<div className='dish'>
 			<div className='row align-items-center'>
 				<div className='col text-right'>
-					<strong>Dla jakiej potrawy liczysz koszt?</strong>
+					<strong className="mr-3">Dla jakiej potrawy liczysz koszt?</strong>
 				</div>
 				<div className='col'>
 					<FormControl variant='outlined'>
