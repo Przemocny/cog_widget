@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+const products = JSON.parse(require('../common/foodcosty_sheet.json'))
 
 const units = [
 	{ name: 'litr', measure: 1000, short: 'l' },
@@ -9,24 +10,6 @@ const units = [
 	{ name: 'płaska łyżka stołowa', measure: 15, short: 'pls' },
 	{ name: 'płaska łyżeczka', measure: 6, short: 'pl' },
 	{ name: 'szczypta', measure: 0.5, short: 'szcz' },
-]
-
-const products = [
-	{ name: 'szynka', unit: 'g', measure: 1000, price: 20.5 },
-	{ name: 'ser żółty', unit: 'g', measure: 1000, price: 19.5 },
-	{ name: 'oliwki', unit: 'g', measure: 250, price: 7.99 },
-	{ name: 'pieczarki', unit: 'g', measure: 1000, price: 11.5 },
-	{name:'ciasto do pizzy', measure:1000, unit:'g', price:8 },
-	{name:'ananas', measure:400, unit:'g', price:8 },
-	{name:'sos pomidorowy', measure:1000, unit:'g', price:24 },
-	{name:'wołowina mielona', measure:1000, unit:'g', price:40 },
-	{name:'sałata', measure:250, unit:'g', price:5 },
-	{name:'pomidor', measure:1000, unit:'g', price:8 },
-	{name:'cebula', measure:1000, unit:'g', price:5 },
-	{name:'makaron', measure:500, unit:'g', price:8 },
-	{name:'zioła', measure:100, unit:'g', price:4, },
-	{name:'szynka mielona', measure:1000, unit:'g', price:18 },
-
 ]
 
 const pizza = [
@@ -63,17 +46,48 @@ const calcPortionCost = (product) => {
 	)
 }
 
+
+
+const aggregateByFirstNumber = (arr) => {
+	const aggObj = {}
+	let lastElem = null
+
+	arr.map((el, idx) => {
+		const firstLetter = el.name[0].toLowerCase()
+		if (lastElem === null) {
+			lastElem = firstLetter
+			aggObj[firstLetter] = [el]
+		} else {
+			console.log(lastElem, firstLetter)
+			if (lastElem === firstLetter) {
+				aggObj[firstLetter].push(el)
+			} else {
+				aggObj[firstLetter] = [el]
+				lastElem = firstLetter
+			}
+		}
+	})
+
+	const entries = Object.entries(aggObj)
+
+
+	return entries.filter((_,k)=>k < 4)
+}
+
+
 const { actions, reducer } = createSlice({
 	name: 'products',
 	initialState: {
 		dish: '',
 		products: products,
-		filteredProducts: products,
+		filteredProducts: aggregateByFirstNumber(products),
 		units: units,
 		productsFilter: '',
 		selectedProducts: [],
 		isModalShow: false,
+		foodloss:0,
 		isIngredientModalShow: false,
+		isOfferModalShow: false,
 		activeProductInModal: {
 			unit: 'g',
 			price: 0,
@@ -92,7 +106,10 @@ const { actions, reducer } = createSlice({
 	},
 
 	reducers: {
+		changeFoodloss(state,action){
+			const {foodloss} = action.payload
 
+		},
 		checkExample(state, action){
 			const {name} = action.payload
 
@@ -134,14 +151,17 @@ const { actions, reducer } = createSlice({
 			state.productsFilter = filter
 
 			if (filter.length === 0) {
-				state.filteredProducts = state.products
-			} else {
-				state.filteredProducts = state.products.filter((e) =>
+				state.filteredProducts = aggregateByFirstNumber(state.products)
+			} 
+			else if ([1,2].includes(filter.length)){
+			}
+			else {
+					state.filteredProducts = aggregateByFirstNumber(state.products.filter((e) =>
 					e.name.toLowerCase().includes(filter.toLowerCase())
-				)
+				))
+				
 			}
 		},
-
 		closeModalWithProduct(state, action) {
 			state.isModalShow = false
 		},
@@ -195,6 +215,23 @@ const { actions, reducer } = createSlice({
 			}
 		},
 
+		changePriceOfSelectedProduct(state, action) {
+			const { price } = action.payload
+			const actualProduct = { ...state.activeProductInModal }
+
+			const cost = calcPortionCost({
+				...actualProduct,
+				price: price,
+			})
+
+			state.activeProductInModal = {
+				...actualProduct,
+				price: price,
+				cost: cost,
+			}
+
+		},
+
 		changeCostOfSelectedProduct(state, action) {
 			const { cost, idx } = action.payload
 			state.selectedProducts[idx]['cost'] = cost
@@ -242,12 +279,13 @@ const { actions, reducer } = createSlice({
 			state.sum = Math.round(sum * 100) / 100
 			state.weight = Math.round(weight)
 
-			state.filteredProducts = state.products
+			state.filteredProducts = aggregateByFirstNumber(state.products)
 			state.productsFilter = ''
 		},
 
 		clearSelectedProducts(state, action) {
-			state.filteredProducts = state.products
+			state.filteredProducts = aggregateByFirstNumber(state.products)
+
 			state.productsFilter = ''
 			state.selectedProducts = []
 			state.sum = 0
@@ -301,9 +339,9 @@ const { actions, reducer } = createSlice({
 			state.isIngredientModalShow = false
 
 			state.filter = newIngredient.name
-			state.filteredProducts = ingredients.filter((e) =>
+			state.filteredProducts = aggregateByFirstNumber(ingredients.filter((e) =>
 					e.name.toLowerCase().includes(newIngredient.name.toLowerCase())
-				)
+				))
 
 			state.newIngredient = {
 				name: '',
@@ -321,6 +359,15 @@ const { actions, reducer } = createSlice({
 				price: 0,
 			}
 		},
+
+		openOfferModal(state,action){
+			state.isOfferModalShow = true
+		},
+		closeOfferModal(state,action){
+			state.isOfferModalShow = false
+		}
+
+		
 	},
 })
 
@@ -339,7 +386,8 @@ export const {
 	changeNewIngredientField,
 	addNewIngredient,
 	closeNewIngredientModal,
-	checkExample
+	checkExample,
+	openOfferModal,closeOfferModal, changePriceOfSelectedProduct
 } = actions
 
 export default reducer
